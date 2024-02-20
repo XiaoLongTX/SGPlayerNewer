@@ -16,15 +16,15 @@
 # limitations under the License.
 #
 
-IJK_OPENSSL_UPSTREAM=https://github.com/openssl/openssl.git
-IJK_OPENSSL_FORK=https://github.com/openssl/openssl.git
-IJK_OPENSSL_COMMIT=$2
-IJK_OPENSSL_LOCAL_REPO=build/extra/openssl
+OPENSSL_UPSTREAM=https://github.com/openssl/openssl.git
+OPENSSL_FORK=https://github.com/openssl/openssl.git
+OPENSSL_COMMIT=$2
+OPENSSL_LOCAL_REPO=build/extra/openssl
 
 set -e
 
 FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="armv7 arm64 i386 x86_64"
+FF_ALL_ARCHS_IOS="arm64"
 FF_ALL_ARCHS_TVOS="arm64 x86_64"
 FF_ALL_ARCHS_MACOS="x86_64"
 
@@ -32,14 +32,14 @@ FF_PLATFORM=$1
 
 function pull_common() {
     echo "== pull openssl base =="
-    sh scripts/pull-repo-base.sh $IJK_OPENSSL_UPSTREAM $IJK_OPENSSL_LOCAL_REPO
+    sh scripts/pull-repo-base.sh $OPENSSL_UPSTREAM $OPENSSL_LOCAL_REPO
 }
 
 function pull_fork() {
     echo "== pull openssl fork $1 =="
-    sh scripts/pull-repo-ref.sh $IJK_OPENSSL_FORK build/source/$FF_PLATFORM/openssl-$1 ${IJK_OPENSSL_LOCAL_REPO}
+    sh scripts/pull-repo-ref.sh $OPENSSL_FORK build/source/$FF_PLATFORM/openssl-$1 ${OPENSSL_LOCAL_REPO}
     cd build/source/$FF_PLATFORM/openssl-$1
-    git checkout ${IJK_OPENSSL_COMMIT} -B SGPlayer
+    git checkout ${OPENSSL_COMMIT} -B SGPlayer
     cd -
 }
 

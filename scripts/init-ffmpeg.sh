@@ -16,18 +16,18 @@
 # limitations under the License.
 #
 
-IJK_FFMPEG_UPSTREAM=https://github.com/FFmpeg/FFmpeg.git
-IJK_FFMPEG_FORK=https://github.com/FFmpeg/FFmpeg.git
-IJK_FFMPEG_COMMIT=$2
-IJK_FFMPEG_LOCAL_REPO=build/extra/ffmpeg
+FFMPEG_UPSTREAM=https://github.com/FFmpeg/FFmpeg.git
+FFMPEG_FORK=https://github.com/FFmpeg/FFmpeg.git
+FFMPEG_COMMIT=$2
+FFMPEG_LOCAL_REPO=build/extra/ffmpeg
 
-IJK_GASP_UPSTREAM=https://github.com/libav/gas-preprocessor.git
-IJK_GASP_LOCAL_REPO=build/extra/gas-preprocessor
+GASP_UPSTREAM=https://github.com/libav/gas-preprocessor.git
+GASP_LOCAL_REPO=build/extra/gas-preprocessor
 
 set -e
 
 FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="armv7 arm64 i386 x86_64"
+FF_ALL_ARCHS_IOS="arm64"
 FF_ALL_ARCHS_TVOS="arm64 x86_64"
 FF_ALL_ARCHS_MACOS="x86_64"
 
@@ -35,17 +35,17 @@ FF_PLATFORM=$1
 
 function pull_common() {
     echo "== pull gas-preprocessor base =="
-    sh scripts/pull-repo-base.sh $IJK_GASP_UPSTREAM $IJK_GASP_LOCAL_REPO
+    sh scripts/pull-repo-base.sh $GASP_UPSTREAM $GASP_LOCAL_REPO
 
     echo "== pull ffmpeg base =="
-    sh scripts/pull-repo-base.sh $IJK_FFMPEG_UPSTREAM $IJK_FFMPEG_LOCAL_REPO
+    sh scripts/pull-repo-base.sh $FFMPEG_UPSTREAM $FFMPEG_LOCAL_REPO
 }
 
 function pull_fork() {
     echo "== pull ffmpeg fork $1 =="
-    sh scripts/pull-repo-ref.sh $IJK_FFMPEG_FORK build/source/$FF_PLATFORM/ffmpeg-$1 ${IJK_FFMPEG_LOCAL_REPO}
+    sh scripts/pull-repo-ref.sh $FFMPEG_FORK build/source/$FF_PLATFORM/ffmpeg-$1 ${FFMPEG_LOCAL_REPO}
     cd build/source/$FF_PLATFORM/ffmpeg-$1
-    git checkout ${IJK_FFMPEG_COMMIT} -B SGPlayer
+    git checkout ${FFMPEG_COMMIT} -B SGPlayer
     cd -
 }
 

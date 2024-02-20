@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -398,14 +398,6 @@
 		9CFA234F230BCFFC00061AAC /* avformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avformat.h; sourceTree = "<group>"; };
 		9CFA2351230BCFFC00061AAC /* swscale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swscale.h; sourceTree = "<group>"; };
 		9CFA2353230BCFFC00061AAC /* swresample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swresample.h; sourceTree = "<group>"; };
-		9CFA235A230BD00400061AAC /* imgutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgutils.h; sourceTree = "<group>"; };
-		9CFA235C230BD00400061AAC /* avformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avformat.h; sourceTree = "<group>"; };
-		9CFA235E230BD00400061AAC /* swscale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swscale.h; sourceTree = "<group>"; };
-		9CFA2360230BD00400061AAC /* swresample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swresample.h; sourceTree = "<group>"; };
-		9CFA2367230BD00C00061AAC /* imgutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imgutils.h; sourceTree = "<group>"; };
-		9CFA2369230BD00C00061AAC /* avformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avformat.h; sourceTree = "<group>"; };
-		9CFA236B230BD00C00061AAC /* swscale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swscale.h; sourceTree = "<group>"; };
-		9CFA236D230BD00C00061AAC /* swresample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swresample.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,8 +447,6 @@
 			isa = PBXGroup;
 			children = (
 				9CFA234B230BCFFC00061AAC /* iOS */,
-				9CFA2358230BD00400061AAC /* macOS */,
-				9CFA2365230BD00C00061AAC /* tvOS */,
 				9CB61F5D2112B93C00F5BE6B /* SGFFmpeg.h */,
 				9CB61F5E2112B93C00F5BE6B /* SGFFmpeg.m */,
 			);
@@ -865,94 +855,6 @@
 			path = libswresample;
 			sourceTree = "<group>";
 		};
-		9CFA2358230BD00400061AAC /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA2359230BD00400061AAC /* libavutil */,
-				9CFA235B230BD00400061AAC /* libavformat */,
-				9CFA235D230BD00400061AAC /* libswscale */,
-				9CFA235F230BD00400061AAC /* libswresample */,
-			);
-			name = macOS;
-			path = ../../../../build/build/macOS/universal/include;
-			sourceTree = "<group>";
-		};
-		9CFA2359230BD00400061AAC /* libavutil */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA235A230BD00400061AAC /* imgutils.h */,
-			);
-			path = libavutil;
-			sourceTree = "<group>";
-		};
-		9CFA235B230BD00400061AAC /* libavformat */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA235C230BD00400061AAC /* avformat.h */,
-			);
-			path = libavformat;
-			sourceTree = "<group>";
-		};
-		9CFA235D230BD00400061AAC /* libswscale */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA235E230BD00400061AAC /* swscale.h */,
-			);
-			path = libswscale;
-			sourceTree = "<group>";
-		};
-		9CFA235F230BD00400061AAC /* libswresample */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA2360230BD00400061AAC /* swresample.h */,
-			);
-			path = libswresample;
-			sourceTree = "<group>";
-		};
-		9CFA2365230BD00C00061AAC /* tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA2366230BD00C00061AAC /* libavutil */,
-				9CFA2368230BD00C00061AAC /* libavformat */,
-				9CFA236A230BD00C00061AAC /* libswscale */,
-				9CFA236C230BD00C00061AAC /* libswresample */,
-			);
-			name = tvOS;
-			path = ../../../../build/build/tvOS/universal/include;
-			sourceTree = "<group>";
-		};
-		9CFA2366230BD00C00061AAC /* libavutil */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA2367230BD00C00061AAC /* imgutils.h */,
-			);
-			path = libavutil;
-			sourceTree = "<group>";
-		};
-		9CFA2368230BD00C00061AAC /* libavformat */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA2369230BD00C00061AAC /* avformat.h */,
-			);
-			path = libavformat;
-			sourceTree = "<group>";
-		};
-		9CFA236A230BD00C00061AAC /* libswscale */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA236B230BD00C00061AAC /* swscale.h */,
-			);
-			path = libswscale;
-			sourceTree = "<group>";
-		};
-		9CFA236C230BD00C00061AAC /* libswresample */ = {
-			isa = PBXGroup;
-			children = (
-				9CFA236D230BD00C00061AAC /* swresample.h */,
-			);
-			path = libswresample;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1094,7 +996,8 @@
 		9CEFA6CD1E7122BF00835CAB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = single;
 				TargetAttributes = {
 					9CEFA6D51E7122BF00835CAB = {
@@ -1105,11 +1008,11 @@
 			};
 			buildConfigurationList = 9CEFA6D01E7122BF00835CAB /* Build configuration list for PBXProject "SGPlayer" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 9CEFA6CC1E7122BF00835CAB;
 			productRefGroup = 9CEFA6D71E7122BF00835CAB /* Products */;
@@ -1246,6 +1149,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1257,6 +1161,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1306,6 +1211,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1317,6 +1223,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1356,9 +1263,14 @@
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/build/build/iOS/universal/lib";
 				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.iOS;
 				PRODUCT_NAME = SGPlayer;
@@ -1390,9 +1302,14 @@
 				INFOPLIST_FILE = SGPlayer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/build/build/iOS/universal/lib";
 				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MODULEMAP_FILE = "$(PROJECT_DIR)/SGPlayer/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.libobjc.SGPlayer.iOS;
 				PRODUCT_NAME = SGPlayer;

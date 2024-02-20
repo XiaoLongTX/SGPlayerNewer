@@ -5,12 +5,6 @@
       location = "group:demo-ios/demo-ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:demo-macos/demo-macos.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:demo-tvos/demo-tvos.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:../SGPlayer.xcodeproj">
    </FileRef>
 </Workspace>

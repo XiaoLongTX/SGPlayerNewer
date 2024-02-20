@@ -13,6 +13,7 @@
 #import "SGOptions.h"
 #import "SGError.h"
 #import "SGMacro.h"
+#import "libavcodec/avcodec.h"
 
 @interface SGCodecContext ()
 

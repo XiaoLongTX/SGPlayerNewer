@@ -150,10 +150,8 @@ elif [ "$FF_ACTION" = "clean" ]; then
     done
     echo "clean build cache"
     echo "================="
-    rm -rf $UNI_BUILD_ROOT/build/$FF_PLATFORM/ffmpeg-*
-    rm -rf $UNI_BUILD_ROOT/build/$FF_PLATFORM/openssl-*
-    rm -rf $UNI_BUILD_ROOT/build/$FF_PLATFORM/universal/include
-    rm -rf $UNI_BUILD_ROOT/build/$FF_PLATFORM/universal/lib
+    rm -rf $UNI_BUILD_ROOT/build/$FF_PLATFORM/
+    rm -rf $UNI_BUILD_ROOT/source/$FF_PLATFORM/
     echo "clean success"
 else
     echo "Usage:"

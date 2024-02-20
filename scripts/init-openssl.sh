@@ -19,7 +19,7 @@
 OPENSSL_UPSTREAM=https://github.com/openssl/openssl.git
 OPENSSL_FORK=https://github.com/openssl/openssl.git
 OPENSSL_COMMIT=$2
-OPENSSL_LOCAL_REPO=build/extra/openssl
+OPENSSL_LOCAL_REPO=~/openssl
 
 set -e
 

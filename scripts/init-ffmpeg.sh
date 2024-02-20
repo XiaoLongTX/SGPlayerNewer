@@ -16,13 +16,12 @@
 # limitations under the License.
 #
 
-FFMPEG_UPSTREAM=https://github.com/FFmpeg/FFmpeg.git
-FFMPEG_FORK=https://github.com/FFmpeg/FFmpeg.git
+FFMPEG_UPSTREAM=https://github.com/XiaoLongTX/FFmpeg.git
 FFMPEG_COMMIT=$2
-FFMPEG_LOCAL_REPO=build/extra/ffmpeg
+FFMPEG_LOCAL_REPO=~/FFmpeg
 
 GASP_UPSTREAM=https://github.com/libav/gas-preprocessor.git
-GASP_LOCAL_REPO=build/extra/gas-preprocessor
+GASP_LOCAL_REPO=build/gas-preprocessor
 
 set -e
 
@@ -43,7 +42,7 @@ function pull_common() {
 
 function pull_fork() {
     echo "== pull ffmpeg fork $1 =="
-    sh scripts/pull-repo-ref.sh $FFMPEG_FORK build/source/$FF_PLATFORM/ffmpeg-$1 ${FFMPEG_LOCAL_REPO}
+    sh scripts/pull-repo-ref.sh $FFMPEG_UPSTREAM build/source/$FF_PLATFORM/ffmpeg-$1 ${FFMPEG_LOCAL_REPO}
     cd build/source/$FF_PLATFORM/ffmpeg-$1
     git checkout ${FFMPEG_COMMIT} -B SGPlayer
     cd -

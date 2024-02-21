@@ -8,35 +8,6 @@
 
 #import "SGPLFImage.h"
 
-#if SGPLATFORM_TARGET_OS_MAC
-
-SGPLFImage * SGPLFImageWithCGImage(CGImageRef image)
-{
-    return [[NSImage alloc] initWithCGImage:image size:CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image))];
-}
-
-SGPLFImage * SGPLFImageWithCVPixelBuffer(CVPixelBufferRef pixelBuffer)
-{
-    CIImage *ciImage = SGPLFImageCIImageWithCVPexelBuffer(pixelBuffer);
-    if (!ciImage) return nil;
-    NSCIImageRep *imageRep = [NSCIImageRep imageRepWithCIImage:ciImage];
-    NSImage *image = [[NSImage alloc] initWithSize:imageRep.size];
-    [image addRepresentation:imageRep];
-    return image;
-}
-
-CIImage * SGPLFImageCIImageWithCVPexelBuffer(CVPixelBufferRef pixelBuffer)
-{
-    if (@available(macOS 10.11, *)) {
-        CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-        return image;
-    } else {
-        return nil;
-    }
-}
-
-#elif SGPLATFORM_TARGET_OS_IPHONE_OR_TV
-
 SGPLFImage * SGPLFImageWithCGImage(CGImageRef image)
 {
     return [UIImage imageWithCGImage:image];
@@ -54,8 +25,6 @@ CIImage * SGPLFImageCIImageWithCVPexelBuffer(CVPixelBufferRef pixelBuffer)
     CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
     return image;
 }
-
-#endif
 
 CGImageRef SGPLFImageCGImageWithCVPexelBuffer(CVPixelBufferRef pixelBuffer)
 {

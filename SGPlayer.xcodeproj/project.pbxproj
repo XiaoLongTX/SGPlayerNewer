@@ -158,12 +158,10 @@
 		9CE6F5332004D97D00D1F4C8 /* SGPLFColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6F51B2004D97C00D1F4C8 /* SGPLFColor.m */; };
 		9CE6F53F2004D97D00D1F4C8 /* SGPLFImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F51E2004D97C00D1F4C8 /* SGPLFImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE6F5432004D97D00D1F4C8 /* SGPLFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6F51F2004D97C00D1F4C8 /* SGPLFImage.m */; };
-		9CE6F5472004D97D00D1F4C8 /* SGPLFObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F5202004D97C00D1F4C8 /* SGPLFObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE6F54B2004D97D00D1F4C8 /* SGPLFScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F5212004D97C00D1F4C8 /* SGPLFScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE6F54F2004D97D00D1F4C8 /* SGPLFScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6F5222004D97C00D1F4C8 /* SGPLFScreen.m */; };
 		9CE6F5532004D97D00D1F4C8 /* SGPLFView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F5232004D97C00D1F4C8 /* SGPLFView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE6F5572004D97D00D1F4C8 /* SGPLFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6F5242004D97C00D1F4C8 /* SGPLFView.m */; };
-		9CE6F5772004D97D00D1F4C8 /* SGPLFTargets.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F52D2004D97C00D1F4C8 /* SGPLFTargets.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE6F5A22004E7ED00D1F4C8 /* SGMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE6F5A12004E7ED00D1F4C8 /* SGMacro.h */; };
 		9CE71915219C3F7900256485 /* SGURLSegment.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CE71913219C3F7900256485 /* SGURLSegment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9CE71918219C3F7900256485 /* SGURLSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE71914219C3F7900256485 /* SGURLSegment.m */; };
@@ -356,12 +354,10 @@
 		9CE6F51B2004D97C00D1F4C8 /* SGPLFColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPLFColor.m; sourceTree = "<group>"; };
 		9CE6F51E2004D97C00D1F4C8 /* SGPLFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPLFImage.h; sourceTree = "<group>"; };
 		9CE6F51F2004D97C00D1F4C8 /* SGPLFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPLFImage.m; sourceTree = "<group>"; };
-		9CE6F5202004D97C00D1F4C8 /* SGPLFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPLFObject.h; sourceTree = "<group>"; };
 		9CE6F5212004D97C00D1F4C8 /* SGPLFScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPLFScreen.h; sourceTree = "<group>"; };
 		9CE6F5222004D97C00D1F4C8 /* SGPLFScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPLFScreen.m; sourceTree = "<group>"; };
 		9CE6F5232004D97C00D1F4C8 /* SGPLFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPLFView.h; sourceTree = "<group>"; };
 		9CE6F5242004D97C00D1F4C8 /* SGPLFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGPLFView.m; sourceTree = "<group>"; };
-		9CE6F52D2004D97C00D1F4C8 /* SGPLFTargets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGPLFTargets.h; sourceTree = "<group>"; };
 		9CE6F5A12004E7ED00D1F4C8 /* SGMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGMacro.h; sourceTree = "<group>"; };
 		9CE71913219C3F7900256485 /* SGURLSegment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SGURLSegment.h; sourceTree = "<group>"; };
 		9CE71914219C3F7900256485 /* SGURLSegment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SGURLSegment.m; sourceTree = "<group>"; };
@@ -687,8 +683,6 @@
 		9CE6F5172004D97C00D1F4C8 /* SGPlatform */ = {
 			isa = PBXGroup;
 			children = (
-				9CE6F52D2004D97C00D1F4C8 /* SGPLFTargets.h */,
-				9CE6F5202004D97C00D1F4C8 /* SGPLFObject.h */,
 				9CE6F5232004D97C00D1F4C8 /* SGPLFView.h */,
 				9CE6F5242004D97C00D1F4C8 /* SGPLFView.m */,
 				9CE6F51E2004D97C00D1F4C8 /* SGPLFImage.h */,
@@ -933,9 +927,7 @@
 				9CB61F5F2112B93C00F5BE6B /* SGFFmpeg.h in Headers */,
 				9CFA2354230BCFFC00061AAC /* imgutils.h in Headers */,
 				9C661C5E230408DE00908563 /* SGDecodable.h in Headers */,
-				9CE6F5772004D97D00D1F4C8 /* SGPLFTargets.h in Headers */,
 				9CDFC3E6218B10F00065C826 /* SGRenderer+Internal.h in Headers */,
-				9CE6F5472004D97D00D1F4C8 /* SGPLFObject.h in Headers */,
 				9CE6F52F2004D97D00D1F4C8 /* SGPLFColor.h in Headers */,
 				9CEBCC9D217EF8E900430024 /* SGTrack+Internal.h in Headers */,
 				9C8D6B8422C4A19500985D55 /* SGMetalPlaneModel.h in Headers */,

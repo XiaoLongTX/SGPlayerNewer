@@ -73,9 +73,8 @@ FOUNDATION_EXPORT const unsigned char SGPlayerVersionString[];
 #import <SGPlayer/SGPLFView.h>
 #import <SGPlayer/SGPLFImage.h>
 #import <SGPlayer/SGPLFColor.h>
-#import <SGPlayer/SGPLFObject.h>
+#import <UIKit/UIKit.h>
 #import <SGPlayer/SGPLFScreen.h>
-#import <SGPlayer/SGPLFTargets.h>
 
 #else
 

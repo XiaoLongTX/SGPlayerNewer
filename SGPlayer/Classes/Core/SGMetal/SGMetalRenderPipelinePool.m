@@ -10,15 +10,7 @@
 #import "SGMetalYUVRenderPipeline.h"
 #import "SGMetalNV12RenderPipeline.h"
 #import "SGMetalBGRARenderPipeline.h"
-
-#import "SGPLFTargets.h"
-#if SGPLATFORM_TARGET_OS_IPHONE
 #import "SGMetalShader_iOS.h"
-#elif SGPLATFORM_TARGET_OS_TV
-#import "SGMetalShader_tvOS.h"
-#elif SGPLATFORM_TARGET_OS_MAC
-#import "SGMetalShader_macOS.h"
-#endif
 
 @interface SGMetalRenderPipelinePool ()
 

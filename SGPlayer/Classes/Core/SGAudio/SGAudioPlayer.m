@@ -7,7 +7,7 @@
 //
 
 #import "SGAudioPlayer.h"
-#import "SGPLFTargets.h"
+
 
 @interface SGAudioPlayer ()
 
@@ -31,11 +31,7 @@
 {
     AudioComponentDescription acd;
     acd.componentType = kAudioUnitType_Mixer;
-#if SGPLATFORM_TARGET_OS_MAC
-    acd.componentSubType = kAudioUnitSubType_StereoMixer;
-#elif SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     acd.componentSubType = kAudioUnitSubType_MultiChannelMixer;
-#endif
     acd.componentManufacturer = kAudioUnitManufacturer_Apple;
     return acd;
 }
@@ -44,11 +40,7 @@
 {
     AudioComponentDescription acd;
     acd.componentType = kAudioUnitType_Output;
-#if SGPLATFORM_TARGET_OS_MAC
-    acd.componentSubType = kAudioUnitSubType_DefaultOutput;
-#elif SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     acd.componentSubType = kAudioUnitSubType_RemoteIO;
-#endif
     acd.componentManufacturer = kAudioUnitManufacturer_Apple;
     return acd;
 }
@@ -124,11 +116,7 @@
     AudioUnitAddRenderNotify(_outputUnit, outputCallback, (__bridge void *)self);
     
     AudioUnitParameterID mixerParam;
-#if SGPLATFORM_TARGET_OS_MAC
-    mixerParam = kStereoMixerParam_Volume;
-#elif SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     mixerParam = kMultiChannelMixerParam_Volume;
-#endif
     AudioUnitGetParameter(_mixerUnit, mixerParam, kAudioUnitScope_Input, 0, &_volume);
     AudioUnitGetParameter(_timePitchUnit, kNewTimePitchParam_Rate, kAudioUnitScope_Global, 0, &_rate);
     AudioUnitGetParameter(_timePitchUnit, kNewTimePitchParam_Pitch, kAudioUnitScope_Global, 0, &_pitch);
@@ -221,11 +209,7 @@
         return;
     }
     AudioUnitParameterID param;
-#if SGPLATFORM_TARGET_OS_MAC
-    param = kStereoMixerParam_Volume;
-#elif SGPLATFORM_TARGET_OS_IPHONE_OR_TV
     param = kMultiChannelMixerParam_Volume;
-#endif
     if (AudioUnitSetParameter(_mixerUnit, param, kAudioUnitScope_Input, 0, volume, 0) == noErr) {
         _volume = volume;
     }

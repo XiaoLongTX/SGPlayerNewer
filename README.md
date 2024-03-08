@@ -6,7 +6,7 @@
 # SGPlayer 
 
 - SGPlayer is a powerful media play framework for iOS
-- 
+- Build scripts are used by default for FFmpeg 6.1.1 and OpenSSL 1.1.1w
 
 ## Features
 
@@ -33,8 +33,6 @@
 ## Getting Started
 
 #### Build FFmpeg and OpenSSL 
-
-- Build scripts are used by default for FFmpeg 6.1.1 and OpenSSL 1.1.1w
 
 ```obj-c
 git clone https://github.com/XiaoLongTX/SGPlayerNewer.git

@@ -1,7 +1,7 @@
 ![Logo](https://github.com/libobjc/SGPlayer/blob/master/documents/banner.jpg?raw=true)
 
 
-![Build Status](https://img.shields.io/badge/build-%20passing%20-brightgreen)  ![License](https://img.shields.io/badge/license-MIT-red) ![Platform](https://img.shields.io/badge/Platform-%20iOS%20macOS%20tvOS%20-blue)
+![Build Status](https://img.shields.io/badge/build-%20passing%20-brightgreen)  ![License](https://img.shields.io/badge/license-MIT-red) ![Platform](https://img.shields.io/badge/Platform-%20iOS%20-blue)
 
 # SGPlayer 
 

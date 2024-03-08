@@ -78,14 +78,14 @@ echo "build_root: $FF_BUILD_ROOT"
 
 #--------------------
 echo "===================="
-echo "[*] config arch $FF_ARCH"
+echo "[*] config arch $FF_ARCH, $FF_ARCH_FULL"
 echo "===================="
 
 FF_BUILD_NAME="unknown"
 FF_XCRUN_PLATFORM=
 FF_XCRUN_OSVERSION=
 FF_GASPP_EXPORT=
-FF_XCODE_BITCODE="-fembed-bitcode"
+FF_XCODE_BITCODE=
 
 if [ "$FF_PLATFORM" = "iOS" ]; then
     if [ "$FF_ARCH" = "x86_64" ]; then
@@ -98,35 +98,56 @@ if [ "$FF_PLATFORM" = "iOS" ]; then
         FF_XCRUN_PLATFORM="iPhoneOS"
         FF_XCRUN_OSVERSION="-miphoneos-version-min=12.0"
         OPENSSL_CFG_FLAGS="iphoneos-cross $OPENSSL_CFG_FLAGS"
+    elif [ "$FF_ARCH_FULL" = "arm64-simulator" ]; then
+        FF_BUILD_NAME="openssl-arm64-simulator"
+        FF_XCRUN_PLATFORM="iPhoneSimulator"
+        FF_XCRUN_OSVERSION="-mios-simulator-version-min=13.0"
+        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
     else
         echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
         exit 1
     fi
 elif [ "$FF_PLATFORM" = "macOS" ]; then
-    if [ "$FF_ARCH" = "x86_64" ]; then
+    if [ "$FF_ARCH_FULL" = "x86_64" ]; then
         FF_BUILD_NAME="openssl-x86_64"
         FF_XCRUN_PLATFORM="MacOSX"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mmacosx-version-min=10.11"
-        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc $OPENSSL_CFG_FLAGS"
+        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mmacosx-version-min=10.15"
+        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc no-asm $OPENSSL_CFG_FLAGS"
+    elif [ "$FF_ARCH_FULL" = "arm64" ]; then
+        FF_BUILD_NAME="openssl-arm64"
+        FF_XCRUN_PLATFORM="MacOSX"
+        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mmacosx-version-min=10.15"
+        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
     else
         echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
         exit 1
     fi
 elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    if [ "$FF_ARCH" = "x86_64" ]; then
+    if [ "$FF_ARCH_FULL" = "x86_64" ]; then
         FF_BUILD_NAME="openssl-x86_64"
         FF_XCRUN_PLATFORM="AppleTVSimulator"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-simulator-version-min=10.2"
-        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH" = "arm64" ]; then
+        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-simulator-version-min=13.0"
+        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc no-asm $OPENSSL_CFG_FLAGS"
+    elif [ "$FF_ARCH_FULL" = "arm64" ]; then
         FF_BUILD_NAME="openssl-arm64"
         FF_XCRUN_PLATFORM="AppleTVOS"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-version-min=10.2"
+        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-version-min=13.0"
         OPENSSL_CFG_FLAGS="iphoneos-cross $OPENSSL_CFG_FLAGS"
+    elif [ "$FF_ARCH_FULL" = "arm64-simulator" ]; then
+        FF_BUILD_NAME="openssl-arm64-simulator"
+        FF_XCRUN_PLATFORM="AppleTVSimulator"
+        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-version-min=13.0"
+        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
     else
         echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
         exit 1
     fi
+    FF_BUILD_SOURCE_TEMP="$FF_BUILD_ROOT/source/$FF_PLATFORM/$FF_BUILD_NAME"
+    LANG=C sed -i -- 's/define HAVE_FORK 1/define HAVE_FORK 0/' "$FF_BUILD_SOURCE_TEMP/apps/speed.c"
+    LANG=C sed -i -- 's/!defined(OPENSSL_NO_POSIX_IO)/defined(HAVE_FORK)/' "$FF_BUILD_SOURCE_TEMP/apps/ocsp.c"
+    LANG=C sed -i -- 's/fork()/-1/' "$FF_BUILD_SOURCE_TEMP/apps/ocsp.c"
+    LANG=C sed -i -- 's/fork()/-1/' "$FF_BUILD_SOURCE_TEMP/test/drbgtest.c"
+    LANG=C sed -i -- 's/!defined(OPENSSL_NO_ASYNC)/defined(HAVE_FORK)/' "$FF_BUILD_SOURCE_TEMP/crypto/async/arch/async_posix.h"
 else
     echo "unknown platform $FF_PLATFORM";
     exit 1
@@ -143,7 +164,7 @@ echo "===================="
 
 
 FF_BUILD_SOURCE="$FF_BUILD_ROOT/source/$FF_PLATFORM/$FF_BUILD_NAME"
-FF_BUILD_PREFIX="$FF_BUILD_ROOT/build/$FF_PLATFORM/$FF_BUILD_NAME/output"
+FF_BUILD_PREFIX="$FF_BUILD_ROOT/libs/$FF_PLATFORM/$FF_BUILD_NAME/output"
 
 mkdir -p $FF_BUILD_PREFIX
 
@@ -171,7 +192,7 @@ echo "[*] configurate openssl"
 echo "--------------------"
 
 OPENSSL_CFG_FLAGS="$OPENSSL_CFG_FLAGS $FF_XCODE_BITCODE"
-OPENSSL_CFG_FLAGS="$OPENSSL_CFG_FLAGS --openssldir=$FF_BUILD_PREFIX"
+OPENSSL_CFG_FLAGS="$OPENSSL_CFG_FLAGS --prefix=$FF_BUILD_PREFIX --openssldir=$FF_BUILD_PREFIX"
 
 # xcode configuration
 export DEBUG_INFORMATION_FORMAT=dwarf-with-dsym

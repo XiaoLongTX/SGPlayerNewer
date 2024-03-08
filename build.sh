@@ -6,7 +6,7 @@ PLATFORM=$1
 ACTION=$2
 
 FFMPEG_VERSION=dev_for_player
-OPENSSL_VERSION=OpenSSL_1_0_2s
+OPENSSL_VERSION=OpenSSL_1_1_1w
 
 if [ "$ACTION" = "build" ]; then
     sh scripts/init-openssl.sh $PLATFORM $OPENSSL_VERSION

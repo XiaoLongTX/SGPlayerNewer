@@ -5,11 +5,11 @@
 
 # SGPlayer 
 
-- SGPlayer is a powerful media play framework for iOS, macOS, and tvOS.
+- SGPlayer is a powerful media play framework for iOS
+- 
 
 ## Features
 
-- iOS, tvOS, macOS.
 - 360° panorama video.
 - Compose complex asset.
 - Background playback.
@@ -28,30 +28,18 @@
 
 ## Requirements
 
-- iOS 13.0 or later
-- tvOS 13.0 or later
-- macOS 10.15 or later
+- iOS 12.0 or later
 
 ## Getting Started
 
 #### Build FFmpeg and OpenSSL 
 
-- Build scripts are used by default for FFmpeg 4.4.4 and OpenSSL 1.1.1w
+- Build scripts are used by default for FFmpeg 6.1.1 and OpenSSL 1.1.1w
 
 ```obj-c
-git clone https://github.com/libobjc/SGPlayer.git
+git clone https://github.com/XiaoLongTX/SGPlayerNewer.git
 cd SGPlayer
-git checkout 2.1.0 -B latest
-
-// iOS
-./build.sh iOS build
-
-// tvOS
-./build.sh tvOS build
-
-// macOS
-./build.sh macOS build
-```
+./build.sh build
 
 #### Open demo project in Xcode
 
@@ -68,17 +56,3 @@ git checkout 2.1.0 -B latest
 - libbz2.tbd
 - libz.tbd
 ```
-
-## Flow Chart
-
-![Flow Chart](https://github.com/libobjc/SGPlayer/blob/master/documents/flow-chart.jpg?raw=true)
-
-## Author
-
-- GitHub : [Single](https://github.com/libobjc)
-- Email : libobjc@gmail.com
-
-## Developed by Author
-
-- [KTVHTTPCache](https://github.com/ChangbaDevs/KTVHTTPCache) - A smart media cache framework.
-- [KTVVideoProcess](https://github.com/ChangbaDevs/KTVVideoProcess) - A High-Performance video effects processing framework.

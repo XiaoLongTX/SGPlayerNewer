@@ -21,13 +21,7 @@
 
 set -e
 
-FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="arm64"
-FF_ALL_ARCHS_TVOS="arm64 x86_64"
-FF_ALL_ARCHS_MACOS="x86_64"
-
-FF_PLATFORM=$1
-FF_ACTION=$2
+FF_ACTION=$1
 
 #----------
 UNI_BUILD_ROOT=`pwd`/build
@@ -43,76 +37,65 @@ echo_archs() {
     echo "===================="
     echo "[*] check xcode version"
     echo "===================="
-    echo "FF_PLATFORM = $FF_PLATFORM"
-    echo "FF_ALL_ARCHS = $FF_ALL_ARCHS"
 }
 
 do_lipo_ffmpeg () {
     LIB_FILE=$1
     LIPO_FLAGS=
-    for ARCH in $FF_ALL_ARCHS
-    do
-        ARCH_LIB_FILE="$UNI_BUILD_ROOT/libs/$FF_PLATFORM/ffmpeg-$ARCH/output/lib/$LIB_FILE"
-        if [ -f "$ARCH_LIB_FILE" ]; then
-            LIPO_FLAGS="$LIPO_FLAGS $ARCH_LIB_FILE"
-        else
-            echo "skip $LIB_FILE of $ARCH";
-        fi
-    done
+    ARCH_LIB_FILE="$UNI_BUILD_ROOT/libs/ffmpeg-arm64/output/lib/$LIB_FILE"
+            if [ -f "$ARCH_LIB_FILE" ]; then
+                LIPO_FLAGS="$LIPO_FLAGS $ARCH_LIB_FILE"
+            else
+                echo "skip $LIB_FILE of arm64";
+            fi
 
-    xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
-    xcrun lipo -info $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
+    xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
+    xcrun lipo -info $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
 }
 
 do_lipo_ssl () {
     LIB_FILE=$1
     LIPO_FLAGS=
-    for ARCH in $FF_ALL_ARCHS
-    do
-        ARCH_LIB_FILE="$UNI_BUILD_ROOT/libs/$FF_PLATFORM/openssl-$ARCH/output/lib/$LIB_FILE"
-        if [ -f "$ARCH_LIB_FILE" ]; then
-            LIPO_FLAGS="$LIPO_FLAGS $ARCH_LIB_FILE"
-        else
-            echo "skip $LIB_FILE of $ARCH";
-        fi
-    done
+    ARCH_LIB_FILE="$UNI_BUILD_ROOT/libs/openssl-arm64/output/lib/$LIB_FILE"
+            if [ -f "$ARCH_LIB_FILE" ]; then
+                LIPO_FLAGS="$LIPO_FLAGS $ARCH_LIB_FILE"
+            else
+                echo "skip $LIB_FILE of arm64";
+            fi
 
     if [ "$LIPO_FLAGS" != "" ]; then
-        xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
-        xcrun lipo -info $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
+        xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
+        xcrun lipo -info $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
     fi
 }
 
 do_lipo_all () {
-    mkdir -p $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib
-    echo "lipo archs: $FF_ALL_ARCHS"
+    mkdir -p $UNI_BUILD_ROOT/libs/universal/lib
+    echo "lipo archs: arm64"
     for FF_LIB in $FF_LIBS
     do
         do_lipo_ffmpeg "$FF_LIB.a";
     done
 
     ANY_ARCH=
-    for ARCH in $FF_ALL_ARCHS
-    do
-        ARCH_INC_DIR="$UNI_BUILD_ROOT/libs/$FF_PLATFORM/ffmpeg-$ARCH/output/include"
-        if [ -d "$ARCH_INC_DIR" ]; then
-            if [ -z "$ANY_ARCH" ]; then
-                ANY_ARCH=$ARCH
-                cp -R "$ARCH_INC_DIR" "$UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/"
+    ARCH_INC_DIR="$UNI_BUILD_ROOT/libs/ffmpeg-arm64/output/include"
+            if [ -d "$ARCH_INC_DIR" ]; then
+                if [ -z "$ANY_ARCH" ]; then
+                    ANY_ARCH=arm64
+                    cp -R "$ARCH_INC_DIR" "$UNI_BUILD_ROOT/libs/universal/"
+                fi
+
+                UNI_INC_DIR="$UNI_BUILD_ROOT/libs/universal/include"
+
+                mkdir -p "$UNI_INC_DIR/libavutil/arm64"
+                cp -f "$ARCH_INC_DIR/libavutil/avconfig.h"  "$UNI_INC_DIR/libavutil/arm64/avconfig.h"
+                cp -f scripts/avconfig.h                    "$UNI_INC_DIR/libavutil/avconfig.h"
+                cp -f "$ARCH_INC_DIR/libavutil/ffversion.h" "$UNI_INC_DIR/libavutil/arm64/ffversion.h"
+                cp -f scripts/ffversion.h                   "$UNI_INC_DIR/libavutil/ffversion.h"
+                mkdir -p "$UNI_INC_DIR/libffmpeg/arm64"
+                cp -f "$ARCH_INC_DIR/libffmpeg/config.h"    "$UNI_INC_DIR/libffmpeg/arm64/config.h"
+                cp -f scripts/config.h                      "$UNI_INC_DIR/libffmpeg/config.h"
             fi
-
-            UNI_INC_DIR="$UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/include"
-
-            mkdir -p "$UNI_INC_DIR/libavutil/$ARCH"
-            cp -f "$ARCH_INC_DIR/libavutil/avconfig.h"  "$UNI_INC_DIR/libavutil/$ARCH/avconfig.h"
-            cp -f scripts/avconfig.h                    "$UNI_INC_DIR/libavutil/avconfig.h"
-            cp -f "$ARCH_INC_DIR/libavutil/ffversion.h" "$UNI_INC_DIR/libavutil/$ARCH/ffversion.h"
-            cp -f scripts/ffversion.h                   "$UNI_INC_DIR/libavutil/ffversion.h"
-            mkdir -p "$UNI_INC_DIR/libffmpeg/$ARCH"
-            cp -f "$ARCH_INC_DIR/libffmpeg/config.h"    "$UNI_INC_DIR/libffmpeg/$ARCH/config.h"
-            cp -f scripts/config.h                      "$UNI_INC_DIR/libffmpeg/config.h"
-        fi
-    done
 
     for SSL_LIB in $SSL_LIBS
     do
@@ -121,48 +104,26 @@ do_lipo_all () {
 }
 
 #----------
-if [ "$FF_PLATFORM" = "iOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_IOS
-elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_TVOS
-elif [ "$FF_PLATFORM" = "macOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_MACOS
-else
-    echo "You must specific an platform 'iOS, tvOS, macOS'.\n"
-    exit 1
-fi
 
 if [ "$FF_ACTION" = "build" ]; then
     echo_archs
-    for ARCH in $FF_ALL_ARCHS
-    do
-        sh scripts/do-compile-ffmpeg.sh $FF_PLATFORM $ARCH
-    done
+    sh scripts/do-compile-ffmpeg.sh
     do_lipo_all
 elif [ "$FF_ACTION" = "clean" ]; then
     echo_archs
     echo "=================="
-    for ARCH in $FF_ALL_ARCHS
-    do
-        echo "clean ffmpeg-$ARCH"
-        echo "=================="
-        cd $UNI_BUILD_ROOT/source/$FF_PLATFORM/ffmpeg-$ARCH && git clean -xdf && cd -
-    done
+    echo "clean ffmpeg-arm64"
+    echo "=================="
+    cd $UNI_BUILD_ROOT/source/ffmpeg-arm64 && git clean -xdf && cd -
     echo "clean build cache"
     echo "================="
-    rm -rf $UNI_BUILD_ROOT/libs/$FF_PLATFORM/
-    rm -rf $UNI_BUILD_ROOT/source/$FF_PLATFORM/
+    rm -rf $UNI_BUILD_ROOT/libs/
+    rm -rf $UNI_BUILD_ROOT/source/
     echo "clean success"
 else
     echo "Usage:"
-    echo "  compile-ffmpeg.sh iOS build"
-    echo "  compile-ffmpeg.sh iOS clean"
-    echo " ---"
-    echo "  compile-ffmpeg.sh tvOS build"
-    echo "  compile-ffmpeg.sh tvOS clean"
-    echo " ---"
-    echo "  compile-ffmpeg.sh macOS build"
-    echo "  compile-ffmpeg.sh macOS clean"
+    echo "  compile-ffmpeg.sh build"
+    echo "  compile-ffmpeg.sh clean"
     exit 1
 fi
 

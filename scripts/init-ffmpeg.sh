@@ -17,20 +17,13 @@
 #
 
 FFMPEG_UPSTREAM=https://github.com/XiaoLongTX/FFmpeg.git
-FFMPEG_COMMIT=$2
+FFMPEG_COMMIT=$1
 FFMPEG_LOCAL_REPO=~/FFmpeg
 
 GASP_UPSTREAM=https://github.com/libav/gas-preprocessor.git
 GASP_LOCAL_REPO=build/gas-preprocessor
 
 set -e
-
-FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="arm64"
-FF_ALL_ARCHS_TVOS="arm64 x86_64"
-FF_ALL_ARCHS_MACOS="x86_64"
-
-FF_PLATFORM=$1
 
 function pull_common() {
     echo "== pull gas-preprocessor base =="
@@ -41,32 +34,13 @@ function pull_common() {
 }
 
 function pull_fork() {
-    echo "== pull ffmpeg fork $1 =="
-    sh scripts/pull-repo-ref.sh $FFMPEG_UPSTREAM build/source/$FF_PLATFORM/ffmpeg-$1 ${FFMPEG_LOCAL_REPO}
-    cd build/source/$FF_PLATFORM/ffmpeg-$1
+    echo "== pull ffmpeg fork arm64 =="
+    sh scripts/pull-repo-ref.sh $FFMPEG_UPSTREAM build/source/ffmpeg-arm64 ${FFMPEG_LOCAL_REPO}
+    cd build/source/ffmpeg-arm64
     git checkout ${FFMPEG_COMMIT} -B SGPlayer
     cd -
 }
 
-function pull_fork_all() {
-    for ARCH in $FF_ALL_ARCHS
-    do
-        pull_fork $ARCH
-    done
-}
-
-#----------
-if [ "$FF_PLATFORM" = "iOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_IOS
-elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_TVOS
-elif [ "$FF_PLATFORM" = "macOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_MACOS
-else
-    echo "You must specific an platform 'iOS, tvOS, macOS'.\n"
-    exit 1
-fi
-
 pull_common
-pull_fork_all
+pull_fork
 

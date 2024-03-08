@@ -18,17 +18,10 @@
 
 OPENSSL_UPSTREAM=https://github.com/openssl/openssl.git
 OPENSSL_FORK=https://github.com/openssl/openssl.git
-OPENSSL_COMMIT=$2
+OPENSSL_COMMIT=$1
 OPENSSL_LOCAL_REPO=~/openssl
 
 set -e
-
-FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="arm64"
-FF_ALL_ARCHS_TVOS="arm64 x86_64"
-FF_ALL_ARCHS_MACOS="x86_64"
-
-FF_PLATFORM=$1
 
 function pull_common() {
     echo "== pull openssl base =="
@@ -36,32 +29,13 @@ function pull_common() {
 }
 
 function pull_fork() {
-    echo "== pull openssl fork $1 =="
-    sh scripts/pull-repo-ref.sh $OPENSSL_FORK build/source/$FF_PLATFORM/openssl-$1 ${OPENSSL_LOCAL_REPO}
-    cd build/source/$FF_PLATFORM/openssl-$1
+    echo "== pull openssl fork arm64 =="
+    sh scripts/pull-repo-ref.sh $OPENSSL_FORK build/source/openssl-arm64 ${OPENSSL_LOCAL_REPO}
+    cd build/source/openssl-arm64
     git checkout ${OPENSSL_COMMIT} -B SGPlayer
     cd -
 }
 
-function pull_fork_all() {
-    for ARCH in $FF_ALL_ARCHS
-    do
-        pull_fork $ARCH
-    done
-}
-
-#----------
-if [ "$FF_PLATFORM" = "iOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_IOS
-elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_TVOS
-elif [ "$FF_PLATFORM" = "macOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_MACOS
-else
-    echo "You must specific an platform 'iOS, tvOS, macOS'.\n"
-    exit 1
-fi
-
 pull_common
-pull_fork_all
+pull_fork
 

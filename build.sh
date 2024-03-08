@@ -2,29 +2,22 @@
 
 set -e
 
-PLATFORM=$1
-ACTION=$2
+ACTION=$1
 
 FFMPEG_VERSION=dev_for_player
 OPENSSL_VERSION=OpenSSL_1_1_1w
 
 if [ "$ACTION" = "build" ]; then
-    sh scripts/init-openssl.sh $PLATFORM $OPENSSL_VERSION
-    sh scripts/init-ffmpeg.sh  $PLATFORM $FFMPEG_VERSION
-    sh scripts/compile-openssl.sh $PLATFORM "build"
-    sh scripts/compile-ffmpeg.sh $PLATFORM "build"
+    sh scripts/init-openssl.sh $OPENSSL_VERSION
+    sh scripts/init-ffmpeg.sh $FFMPEG_VERSION
+    sh scripts/compile-openssl.sh "build"
+    sh scripts/compile-ffmpeg.sh "build"
 elif [ "$ACTION" = "clean" ]; then
-    sh scripts/compile-openssl.sh $PLATFORM "clean"
-    sh scripts/compile-ffmpeg.sh $PLATFORM "clean"
+    sh scripts/compile-openssl.sh "clean"
+    sh scripts/compile-ffmpeg.sh "clean"
 else
     echo "Usage:"
-    echo "  build.sh iOS build"
-    echo "  build.sh iOS clean"
-    echo " ---"
-    echo "  build.sh tvOS build"
-    echo "  build.sh tvOS clean"
-    echo " ---"
-    echo "  build.sh macOS build"
-    echo "  build.sh macOS clean"
+    echo "  build.sh build"
+    echo "  build.sh clean"
     exit 1
 fi

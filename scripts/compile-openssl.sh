@@ -21,13 +21,9 @@
 
 set -e
 
-FF_ALL_ARCHS=
-FF_ALL_ARCHS_IOS="arm64"
-FF_ALL_ARCHS_TVOS="arm64 x86_64"
-FF_ALL_ARCHS_MACOS="arm64 x86_64"
 
 FF_PLATFORM=$1
-FF_ACTION=$2
+FF_ACTION=$1
 
 #----------
 UNI_BUILD_ROOT=`pwd`/build
@@ -42,67 +38,39 @@ echo_archs() {
     echo "===================="
     echo "[*] check xcode version"
     echo "===================="
-    echo "FF_PLATFORM = $FF_PLATFORM"
-    echo "FF_ALL_ARCHS = $FF_ALL_ARCHS"
 }
 
 do_lipo () {
     LIB_FILE=$1
     LIPO_FLAGS=
-    for ARCH in $FF_ALL_ARCHS
-    do
-        LIPO_FLAGS="$LIPO_FLAGS $UNI_BUILD_ROOT/libs/$FF_PLATFORM/openssl-$ARCH/output/lib/$LIB_FILE"
-    done
+        LIPO_FLAGS="$LIPO_FLAGS $UNI_BUILD_ROOT/libs/openssl-arm64/output/lib/$LIB_FILE"
 
-    xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
-    xcrun lipo -info $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib/$LIB_FILE
+    xcrun lipo -create $LIPO_FLAGS -output $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
+    xcrun lipo -info $UNI_BUILD_ROOT/libs/universal/lib/$LIB_FILE
 }
 
 do_lipo_all () {
-    mkdir -p $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/lib
-    echo "lipo archs: $FF_ALL_ARCHS"
+    mkdir -p $UNI_BUILD_ROOT/libs/universal/lib
+    echo "lipo archs: arm64"
     for FF_LIB in $FF_LIBS
     do
         do_lipo "$FF_LIB.a";
     done
-    ARR=($FF_ALL_ARCHS)
-    cp -R $UNI_BUILD_ROOT/build/$FF_PLATFORM/openssl-${ARR[0]}/output/include $UNI_BUILD_ROOT/libs/$FF_PLATFORM/universal/
+    cp -R $UNI_BUILD_ROOT/libs/openssl-arm64/output/include $UNI_BUILD_ROOT/libs/universal/
 }
 
 #----------
-if [ "$FF_PLATFORM" = "iOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_IOS
-elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_TVOS
-elif [ "$FF_PLATFORM" = "macOS" ]; then
-    FF_ALL_ARCHS=$FF_ALL_ARCHS_MACOS
-else
-    echo "You must specific an platform 'iOS, tvOS, macOS'.\n"
-    exit 1
-fi
 
 if [ "$FF_ACTION" = "build" ]; then
     echo_archs
-    for ARCH in $FF_ALL_ARCHS
-    do
-        sh scripts/do-compile-openssl.sh $FF_PLATFORM $ARCH
-    done
+        sh scripts/do-compile-openssl.sh
     do_lipo_all
 elif [ "$FF_ACTION" = "clean" ]; then
     echo_archs
-    for ARCH in $FF_ALL_ARCHS
-    do
-        cd $UNI_BUILD_ROOT/source/$FF_PLATFORM/openssl-$ARCH && git clean -xdf && cd -
-    done
+        cd $UNI_BUILD_ROOT/source/openssl-arm64 && git clean -xdf && cd -
 else
     echo "Usage:"
-    echo "  compile-openssl.sh iOS build"
-    echo "  compile-openssl.sh iOS clean"
-    echo " ---"
-    echo "  compile-openssl.sh tvOS build"
-    echo "  compile-openssl.sh tvOS clean"
-    echo " ---"
-    echo "  compile-openssl.sh macOS build"
-    echo "  compile-openssl.sh macOS clean"
+    echo "  compile-openssl.sh build"
+    echo "  compile-openssl.sh clean"
     exit 1
 fi

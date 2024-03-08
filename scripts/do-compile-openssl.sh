@@ -50,18 +50,6 @@ esac
 
 #--------------------
 # common defines
-FF_PLATFORM=$1
-if [ -z "$FF_PLATFORM" ]; then
-    echo "You must specific an platform 'iOS, tvOS, macOS'.\n"
-    exit 1
-fi
-
-FF_ARCH=$2
-if [ -z "$FF_ARCH" ]; then
-    echo "You must specific an architecture 'arm64, x86_64, ...'.\n"
-    exit 1
-fi
-
 
 FF_BUILD_ROOT=`pwd`/build
 FF_TAGET_OS="darwin"
@@ -78,80 +66,17 @@ echo "build_root: $FF_BUILD_ROOT"
 
 #--------------------
 echo "===================="
-echo "[*] config arch $FF_ARCH, $FF_ARCH_FULL"
+echo "[*] config arch arm64"
 echo "===================="
 
 FF_BUILD_NAME="unknown"
-FF_XCRUN_PLATFORM=
-FF_XCRUN_OSVERSION=
 FF_GASPP_EXPORT=
 FF_XCODE_BITCODE=
 
-if [ "$FF_PLATFORM" = "iOS" ]; then
-    if [ "$FF_ARCH" = "x86_64" ]; then
-        FF_BUILD_NAME="openssl-x86_64"
-        FF_XCRUN_PLATFORM="iPhoneSimulator"
-        FF_XCRUN_OSVERSION="-mios-simulator-version-min=12.0"
-        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc no-asm $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH" = "arm64" ]; then
-        FF_BUILD_NAME="openssl-arm64"
-        FF_XCRUN_PLATFORM="iPhoneOS"
-        FF_XCRUN_OSVERSION="-miphoneos-version-min=12.0"
-        OPENSSL_CFG_FLAGS="iphoneos-cross $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH_FULL" = "arm64-simulator" ]; then
-        FF_BUILD_NAME="openssl-arm64-simulator"
-        FF_XCRUN_PLATFORM="iPhoneSimulator"
-        FF_XCRUN_OSVERSION="-mios-simulator-version-min=13.0"
-        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
-    else
-        echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
-        exit 1
-    fi
-elif [ "$FF_PLATFORM" = "macOS" ]; then
-    if [ "$FF_ARCH_FULL" = "x86_64" ]; then
-        FF_BUILD_NAME="openssl-x86_64"
-        FF_XCRUN_PLATFORM="MacOSX"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mmacosx-version-min=10.15"
-        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc no-asm $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH_FULL" = "arm64" ]; then
-        FF_BUILD_NAME="openssl-arm64"
-        FF_XCRUN_PLATFORM="MacOSX"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mmacosx-version-min=10.15"
-        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
-    else
-        echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
-        exit 1
-    fi
-elif [ "$FF_PLATFORM" = "tvOS" ]; then
-    if [ "$FF_ARCH_FULL" = "x86_64" ]; then
-        FF_BUILD_NAME="openssl-x86_64"
-        FF_XCRUN_PLATFORM="AppleTVSimulator"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-simulator-version-min=13.0"
-        OPENSSL_CFG_FLAGS="darwin64-x86_64-cc no-asm $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH_FULL" = "arm64" ]; then
-        FF_BUILD_NAME="openssl-arm64"
-        FF_XCRUN_PLATFORM="AppleTVOS"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-version-min=13.0"
-        OPENSSL_CFG_FLAGS="iphoneos-cross $OPENSSL_CFG_FLAGS"
-    elif [ "$FF_ARCH_FULL" = "arm64-simulator" ]; then
-        FF_BUILD_NAME="openssl-arm64-simulator"
-        FF_XCRUN_PLATFORM="AppleTVSimulator"
-        FF_XCRUN_OSVERSION="-DHAVE_FORK=0 -mtvos-version-min=13.0"
-        OPENSSL_CFG_FLAGS="darwin64-arm64-cc no-asm $OPENSSL_CFG_FLAGS"
-    else
-        echo "unknown architecture $FF_PLATFORM, $FF_ARCH";
-        exit 1
-    fi
-    FF_BUILD_SOURCE_TEMP="$FF_BUILD_ROOT/source/$FF_PLATFORM/$FF_BUILD_NAME"
-    LANG=C sed -i -- 's/define HAVE_FORK 1/define HAVE_FORK 0/' "$FF_BUILD_SOURCE_TEMP/apps/speed.c"
-    LANG=C sed -i -- 's/!defined(OPENSSL_NO_POSIX_IO)/defined(HAVE_FORK)/' "$FF_BUILD_SOURCE_TEMP/apps/ocsp.c"
-    LANG=C sed -i -- 's/fork()/-1/' "$FF_BUILD_SOURCE_TEMP/apps/ocsp.c"
-    LANG=C sed -i -- 's/fork()/-1/' "$FF_BUILD_SOURCE_TEMP/test/drbgtest.c"
-    LANG=C sed -i -- 's/!defined(OPENSSL_NO_ASYNC)/defined(HAVE_FORK)/' "$FF_BUILD_SOURCE_TEMP/crypto/async/arch/async_posix.h"
-else
-    echo "unknown platform $FF_PLATFORM";
-    exit 1
-fi
+FF_BUILD_NAME="openssl-arm64"
+FF_XCRUN_PLATFORM="iPhoneOS"
+FF_XCRUN_OSVERSION="-miphoneos-version-min=12.0"
+OPENSSL_CFG_FLAGS="iphoneos-cross $OPENSSL_CFG_FLAGS"
 
 echo "build_name: $FF_BUILD_NAME"
 echo "platform:   $FF_XCRUN_PLATFORM"
@@ -163,8 +88,8 @@ echo "[*] make ios toolchain $FF_BUILD_NAME"
 echo "===================="
 
 
-FF_BUILD_SOURCE="$FF_BUILD_ROOT/source/$FF_PLATFORM/$FF_BUILD_NAME"
-FF_BUILD_PREFIX="$FF_BUILD_ROOT/libs/$FF_PLATFORM/$FF_BUILD_NAME/output"
+FF_BUILD_SOURCE="$FF_BUILD_ROOT/source/$FF_BUILD_NAME"
+FF_BUILD_PREFIX="$FF_BUILD_ROOT/libs/$FF_BUILD_NAME/output"
 
 mkdir -p $FF_BUILD_PREFIX
 
@@ -177,7 +102,7 @@ FF_XCRUN_CC="xcrun -sdk $FF_XCRUN_SDK clang"
 export CROSS_TOP="$FF_XCRUN_SDK_PLATFORM_PATH/Developer"
 export CROSS_SDK=`echo ${FF_XCRUN_SDK_PATH/#$CROSS_TOP\/SDKs\//}`
 export BUILD_TOOL="$FF_XCRUN_DEVELOPER"
-export CC="$FF_XCRUN_CC -arch $FF_ARCH $FF_XCRUN_OSVERSION"
+export CC="$FF_XCRUN_CC -arch arm64 $FF_XCRUN_OSVERSION"
 
 echo "build_source: $FF_BUILD_SOURCE"
 echo "build_prefix: $FF_BUILD_PREFIX"
